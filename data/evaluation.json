@@ -1,0 +1,181 @@
+{
+  "evaluation_date": "2026-11-06",
+  "status": "exploratory_engineering_evaluation",
+  "environment": {
+    "gpu_model": "NVIDIA Tesla T4",
+    "gpu_count": 2,
+    "vram_gb_each": 14.56,
+    "combined_vram_gb_physical": 29.12,
+    "architecture": "Turing SM 7.5",
+    "cuda_driver": "580.178.04",
+    "cuda_version": "13.0",
+    "pytorch": "2.11.0+cu130",
+    "system_ram_gb_approx": 31,
+    "inference_stack": "llama.cpp / llama-server"
+  },
+  "models": {
+    "cyberpal": {
+      "name": "CyberPal 2.0 / CyberOss 20B",
+      "artifact": "CyberOss-2.0-20B.Q4_K_M.gguf",
+      "artifact_size_gib": 14.72,
+      "sha256": "22c87386d318486d98f851930dacf0e75a53eef4b8ac97d3517343c42de3410d",
+      "prompt_tokens_per_second": 140.7,
+      "generation_tokens_per_second": 61.6,
+      "process_exit_code": 0,
+      "api_health": "pass",
+      "basic_inference": "pass",
+      "structured_arguments": {
+        "valid": 15,
+        "total": 15,
+        "scope": "earlier bounded short-prompt test set"
+      },
+      "bola_scenario": {
+        "token_identity": "Alice",
+        "requests": [
+          "GET /api/invoices/1001",
+          "GET /api/invoices/2002"
+        ],
+        "rubric_points": 10,
+        "final_verdict": "not preserved",
+        "scored": false
+      },
+      "tool_loop": {
+        "http_status": 200,
+        "finish_reason": "length",
+        "completion_tokens": 500,
+        "output": "functions.api_request({method:\"GET\",path:\"/api/invoices/INV-101\",token:\"alice_token\"})",
+        "structured_tool_calls_emitted": false,
+        "outcome": "fail"
+      },
+      "confirmed_bola_findings": 0,
+      "autonomous_bola_detection": "not demonstrated"
+    },
+    "ravenx": {
+      "name": "RavenX Labs",
+      "artifact_size_gb_approx": 21.71,
+      "artifact_sha256": "not retained in available notes",
+      "build": {
+        "cmake_configuration": "stopped before compilation",
+        "blocker": "CUDA::cuda_driver target missing",
+        "cuda_compiler_sm75_nccl_detection": "succeeded",
+        "planned_context_tokens": 2048
+      },
+      "scorecard": {
+        "reported_clear_passes": 3,
+        "reported_denominator": 8,
+        "note": "The written qualitative table lists nine labels; original summary reports 3/8. Treat 3/8 as a reported score, not a recomputed ratio.",
+        "capabilities": [
+          {
+            "name": "Basic inference",
+            "result": "pass"
+          },
+          {
+            "name": "Structured tool calling",
+            "result": "pass"
+          },
+          {
+            "name": "Isolated tool execution",
+            "result": "pass"
+          },
+          {
+            "name": "Security reasoning",
+            "result": "partial"
+          },
+          {
+            "name": "Report generation",
+            "result": "partial"
+          },
+          {
+            "name": "Multi-tool orchestration",
+            "result": "weak/fail"
+          },
+          {
+            "name": "Evidence interpretation",
+            "result": "fail"
+          },
+          {
+            "name": "Autonomous BOLA discovery",
+            "result": "fail"
+          },
+          {
+            "name": "Long-output reliability",
+            "result": "fail"
+          }
+        ]
+      },
+      "isolated_tool_examples": [
+        {
+          "tool": "calculate_security_score",
+          "input": "8 × 7",
+          "output": 56
+        },
+        {
+          "tool": "http_request",
+          "result": "basic invocation worked"
+        }
+      ],
+      "discovery": {
+        "requests_total": 20,
+        "valid_http_requests": 20,
+        "http_404": 20,
+        "http_404_rate_percent": 100,
+        "intended_invoice_order_routes_reached": false,
+        "confirmed_bola_findings": 0,
+        "route_groups": [
+          {
+            "group": "API collections",
+            "count": 3,
+            "paths": [
+              "/api/users",
+              "/api/posts",
+              "/api/comments"
+            ]
+          },
+          {
+            "group": "Profiles",
+            "count": 2,
+            "paths": [
+              "/api/profiles/alice",
+              "/api/profiles/bob"
+            ]
+          },
+          {
+            "group": "Root collections",
+            "count": 5,
+            "paths": [
+              "/users",
+              "/posts",
+              "/comments",
+              "/profiles",
+              "/api"
+            ]
+          },
+          {
+            "group": "Numeric object routes",
+            "count": 10,
+            "paths": [
+              "/api/users/1",
+              "/api/users/2",
+              "/api/posts/1",
+              "/api/posts/2",
+              "/api/comments/1",
+              "/api/comments/2",
+              "/api/profiles/1",
+              "/api/profiles/2"
+            ]
+          }
+        ]
+      },
+      "output_reliability": "malformed or truncated JSON observed",
+      "autonomous_bola_detection": "not demonstrated"
+    }
+  },
+  "limitations": [
+    "No comparable per-model peak VRAM measurement was preserved.",
+    "Only CyberPal has a single-run prompt and generation speed measurement.",
+    "CyberPal's BOLA scenario has no preserved final verdict or score.",
+    "RavenX's 20 requests all returned 404 and did not reach a valid object endpoint.",
+    "No valid eligible BOLA test denominator exists; accuracy, precision, recall and F1 cannot be computed.",
+    "A 404 route-discovery failure is not evidence that the target is free of BOLA."
+  ]
+}
