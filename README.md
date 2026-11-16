@@ -6,7 +6,7 @@ GPU-based evaluation records for **CyberPal 2.0 / CyberOss 20B** and **RavenX La
 
 ## Interactive results dashboard
 
-Open **[index.html](./index.html)** on GitHub Pages or download it and open it in a browser. The dashboard is built with plain HTML, CSS, JavaScript and SVG; no build step or external chart library is required.
+Open **[CYBER_MODEL_BENCHMARK](./(https://varshsec.github.io/Cyber_model_benchmarks/))** on GitHub Pages or download it and open it in a browser. The dashboard is built with plain HTML, CSS, JavaScript and SVG; no build step or external chart library is required.
 
 Dashboard features:
 - KPI cards for GPU configuration, CyberPal throughput, structured tool checks, and RavenX's 20-request discovery run.
